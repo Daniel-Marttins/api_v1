@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                        // Define o padrão de ECMAScript que será gerado.
+    "lib": ["DOM", "ES2020", "ES2018"],        // Bibliotecas de ferramentas para o node.
+    "allowJs": true,                           // Permite o uso de JavaScript
+    "module": "CommonJS",                      // Define o sistema de módulo como CommonJS (usado no Node.js).
+    "strict": true,                            // Ativa todas as verificações de tipo estrito.
+    "esModuleInterop": true,                   // Facilita a importação de módulos CommonJS e ES Modules.
+    "skipLibCheck": true,                      // Pula a verificação de tipos em arquivos de declaração de biblioteca.
+    "forceConsistentCasingInFileNames": true,  // Garante que o uso de arquivos seja consistente em termos de maiúsculas/minúsculas.
+    "outDir": "./dist",                        // Define o diretório de saída para os arquivos compilados.
+    "rootDir": "./src",                        // Define o diretório raiz dos arquivos de entrada.
+    "experimentalDecorators": true,            // Habilita o suporte a decoradores (necessário para TypeORM).
+    "emitDecoratorMetadata": true              // Emite metadados de tipos para decoradores (necessário para TypeORM).
+  },
+  "include": ["src/**/*.ts"],                  // Inclui todos os arquivos .ts no diretório src.
+  "exclude": ["node_modules"]                  // Exclui o diretório node_modules.
+}
