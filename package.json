@@ -27,6 +27,7 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
+    "api_v1": "file:",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "circular-json": "^0.5.9",

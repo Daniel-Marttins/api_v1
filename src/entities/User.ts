@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { SubscriptionType, UserType } from "../types/GenericTypes";
 import { Tenant } from "./Tenant";
+import { Institution } from "./Institution";
 
 @Entity("users")
 export class User {
@@ -13,7 +14,11 @@ export class User {
 
     @ManyToOne(() => Tenant, { eager: true, cascade: true, onDelete: "CASCADE", nullable: true })
     @JoinColumn({ name: "tenantId" })
-    tenantId!: Tenant;
+    tenant!: Tenant;
+
+    @ManyToMany(() => Institution, (instituitions) => instituitions.users, { onDelete: "CASCADE", nullable: true })
+    @JoinTable()
+    institutions?: Institution[];
 
     @Column({
         type: 'enum',

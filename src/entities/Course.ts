@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColu
 import { CourseModel, CourseType, EducationLevel } from "../types/GenericTypes";
 import { Student } from "./Student";
 import { Tenant } from "./Tenant";
+import { Institution } from "./Institution";
 
 @Entity("courses")
 export class Course {
@@ -14,7 +15,11 @@ export class Course {
 
     @ManyToOne(() => Tenant, { eager: true, cascade: true, onDelete: "CASCADE", nullable: true })
     @JoinColumn({ name: "tenantId" })
-    tenantId!: Tenant;
+    tenant!: Tenant;
+
+    @ManyToOne(() => Institution, { eager: true, cascade: true, onDelete: "CASCADE", nullable: true })
+    @JoinColumn({ name: "institutionId" })
+    instituition!: Institution;
 
     @Column({ type: "varchar", length: 255, nullable: false })
     code!: string;
@@ -53,7 +58,7 @@ export class Course {
     duration!: number;
 
     @Column({ type: "varchar", length: 255, nullable: true })
-    scheduleId?: string;
+    schedule?: string;
 
     @ManyToMany(() => Student, (student) => student.courses)
     students?: Student[];

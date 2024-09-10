@@ -5,6 +5,8 @@ import { MonthlyFee } from "./MonthlyFee";
 import { Course } from "./Course";
 import { Parent } from "./Parent";
 import { Tenant } from "./Tenant";
+import { Institution } from "./Institution";
+import { Subject } from "./Subject";
 
 @Entity("students")
 export class Student {
@@ -17,7 +19,11 @@ export class Student {
 
     @ManyToOne(() => Tenant, { eager: true, cascade: true, onDelete: "CASCADE", nullable: true })
     @JoinColumn({ name: "tenantId" })
-    tenantId!: Tenant;
+    tenant!: Tenant;
+
+    @ManyToOne(() => Institution, { eager: true, cascade: true, onDelete: "CASCADE", nullable: true })
+    @JoinColumn({ name: "institutionId" })
+    instituition!: Institution;
 
     @Column({ type: "varchar", length: 150, nullable: false })
     firstName!: string;
@@ -94,15 +100,18 @@ export class Student {
     @Column({ type: "text", nullable: true })
     medicalConditions?: string;
 
-    @ManyToMany(() => Course, (course) => course.students, { cascade: true, onDelete: "CASCADE", nullable: true })
+    @ManyToMany(() => Course, (course) => course.students, { onDelete: "CASCADE", nullable: true })
     @JoinTable()
     courses?: Course[];
+
+    @ManyToMany(() => Subject, (subject) => subject.students, { onDelete: "CASCADE", nullable: true })
+    subjects?: Subject[];    
 
     @ManyToMany(() => Parent, (parent) => parent.students, { cascade: true, onDelete: "CASCADE", nullable: true })
     @JoinTable()
     parents?: Parent[];
 
-    @OneToMany(() => MonthlyFee, monthlyFee => monthlyFee.studentId, { cascade: true, onDelete: "CASCADE", nullable: true })
+    @OneToMany(() => MonthlyFee, monthlyFee => monthlyFee.student, { cascade: true, onDelete: "CASCADE", nullable: true })
     monthlyFees?: MonthlyFee[];
 
     @Column({ type: "text", nullable: true })

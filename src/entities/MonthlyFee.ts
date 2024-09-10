@@ -3,6 +3,7 @@ import { Student } from "./Student";
 import { PaymentStatus } from "../types/GenericTypes";
 import { Course } from "./Course";
 import { Tenant } from "./Tenant";
+import { Institution } from "./Institution";
 
 @Entity("monthlyFees")
 export class MonthlyFee {
@@ -15,7 +16,11 @@ export class MonthlyFee {
 
     @ManyToOne(() => Tenant, { eager: true, cascade: true, onDelete: "CASCADE", nullable: true })
     @JoinColumn({ name: "tenantId" })
-    tenantId!: Tenant;
+    tenant!: Tenant;
+
+    @ManyToOne(() => Institution, { eager: true, cascade: true, onDelete: "CASCADE", nullable: true })
+    @JoinColumn({ name: "institutionId" })
+    instituition!: Institution;
 
     @Column({
         type: 'enum',
@@ -32,11 +37,11 @@ export class MonthlyFee {
 
     @ManyToOne(() => Student, student => student.monthlyFees, { nullable: false })
     @JoinColumn({ name: "studentId", referencedColumnName: "id" })
-    studentId!: Student;
+    student!: Student;
 
     @ManyToOne(() => Course, { nullable: false })
     @JoinColumn({ name: "courseId", referencedColumnName: "id" })
-    courseId!: Course;
+    course!: Course;
 
     @Column({ type: "timestamp", nullable: false})
     dueDate!: Date;

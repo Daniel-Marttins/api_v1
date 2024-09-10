@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { InstitutionType, SubscriptionType } from "../types/GenericTypes";
 import { City } from "./City";
 import { Tenant } from "./Tenant";
+import { User } from "./User";
 
 @Entity("institutions")
 export class Institution {
@@ -14,7 +15,7 @@ export class Institution {
 
     @ManyToOne(() => Tenant, { eager: true, cascade: true, onDelete: "CASCADE", nullable: true })
     @JoinColumn({ name: "tenantId" })
-    tenantId!: Tenant;
+    tenant!: Tenant;
 
     @Column({ type: "varchar", length: 150, nullable: false })
     name!: string;
@@ -61,6 +62,9 @@ export class Institution {
 
     @Column({ type: "text", nullable: true })
     facilitiesDescription?: string;
+
+    @ManyToMany(() => User, (users) => users.institutions, { cascade: true, onDelete: "CASCADE", nullable: true })
+    users?: User[];
 
     @Column({ type: "varchar", length: 150, nullable: true })
     zipCode?: string;

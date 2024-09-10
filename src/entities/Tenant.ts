@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { SubscriptionType, UserType } from "../types/GenericTypes";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { PlantTitle, SubscriptionType, UserType } from "../types/GenericTypes";
+import { Plan } from "./Plan";
 
 @Entity("tenants")
 export class Tenant {
@@ -15,6 +16,9 @@ export class Tenant {
 
     @Column({ type: "varchar", length: 200, nullable: false })
     password!: string;
+
+    @Column({ type: "text", nullable: true })
+    photoUrl?: string;
 
     @Column({
         type: 'enum',
@@ -32,11 +36,43 @@ export class Tenant {
     })
     subscriptionStatus?: SubscriptionType;
 
+    @ManyToOne(() => Plan, { cascade: true, onDelete: "CASCADE", nullable: true })
+    subscriptionPlan!: Plan;
+
+    @Column({
+        type: 'enum',
+        enum: PlantTitle,
+        default: PlantTitle.Other,
+        nullable: false
+    })
+    subscriptionType!: PlantTitle;
+
     @Column({ type: "timestamp", nullable: true})
     subscriptionStartDate?: Date;
 
     @Column({ type: "timestamp", nullable: true})
     subscriptionEndDate?: Date;
+
+    @Column({ type: "timestamp", nullable: true })
+    subscriptionRenewal?: Date;
+
+    @Column({ type: "timestamp", nullable: true })
+    subscriptionExpiration?: Date;
+
+    @Column({ type: 'int', nullable: false })
+    currentStudents!: number;
+
+    @Column({ type: 'int', nullable: false })
+    currentInstitutions!: number;
+
+    @Column({ type: 'int', nullable: false })
+    currentCourses!: number;
+
+    @Column({ type: 'int', nullable: false })
+    currentTeacher!: number;
+
+    @Column({ type: 'int', nullable: false })
+    currentUsers!: number;
 
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     createdAt!: Date;

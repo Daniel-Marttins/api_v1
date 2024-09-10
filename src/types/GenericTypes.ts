@@ -135,3 +135,17 @@ export enum UserType {
     Teacher,
     Guest
 }
+
+export enum PlanType {
+    Monthly,
+    Annually,
+    Unlimited,
+    Other
+}
+
+export enum PlantTitle {
+    Free,
+    Standard,
+    Premium,
+    Other
+}

@@ -1,8 +1,9 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ParentRelationship, PreferenceContact } from "../types/GenericTypes";
 import { Student } from "./Student";
 import { City } from "./City";
 import { Tenant } from "./Tenant";
+import { Institution } from "./Institution";
 
 @Entity("parents")
 export class Parent {
@@ -15,7 +16,11 @@ export class Parent {
 
     @ManyToOne(() => Tenant, { eager: true, cascade: true, onDelete: "CASCADE", nullable: true })
     @JoinColumn({ name: "tenantId" })
-    tenantId!: Tenant;
+    tenant!: Tenant;
+
+    @ManyToOne(() => Institution, { eager: true, cascade: true, onDelete: "CASCADE", nullable: true })
+    @JoinColumn({ name: "institutionId" })
+    instituition!: Institution;
 
     @Column({ type: "varchar", length: 150, nullable: false })
     firstName!: string;
